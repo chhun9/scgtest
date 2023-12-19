@@ -2,33 +2,47 @@ spring:
   cloud:
     gateway:
       routes:
-      - id: combination-service-wheel-1
-        uri: http://localhost:13001
-        predicates:
-        - Path=/combination/wheel/**
-        - Method=GET
-      - id: combination-service-wheel-2
-        uri: http://localhost:23001
-        predicates:
-        - Path=/combination/wheel/**
-        - Method!=GET
-      - id: combination-service-body-1
-        uri: http://localhost:13002
-        predicates:
-        - Path=/combination/body/**
-        - Method=GET
-      - id: combination-service-body-2
-        uri: http://localhost:23002
-        predicates:
-        - Path=/combination/body/**
-        - Method!=GET
-      - id: combination-service-engine-1
-        uri: http://localhost:13003
-        predicates:
-        - Path=/combination/engine/**
-        - Method=GET
-      - id: combination-service-engine-2
-        uri: http://localhost:23003
-        predicates:
-        - Path=/combination/engine/**
-        - Method!=GET
+        - id: combination-service-wheel-1
+          uri: http://localhost:13001
+          predicates:
+            - Path=/combination/wheel/**
+            - Method=GET
+          filters:
+            - RewritePath=/combination/wheel/(?<path>.*),/$\{path}
+        - id: combination-service-wheel-2
+          uri: http://localhost:23001
+          predicates:
+            - Path=/combination/wheel/**
+            - Method=POST,DELETE,PUT
+          filters:
+            - RewritePath=/combination/wheel/(?<path>.*),/$\{path}
+
+        - id: combination-service-body-1
+          uri: http://localhost:13002
+          predicates:
+            - Path=/combination/body/**
+            - Method=GET
+          filters:
+            - RewritePath=/combination/body/(?<path>.*),/$\{path}
+        - id: combination-service-body-2
+          uri: http://localhost:23002
+          predicates:
+            - Path=/combination/body/**
+            - Method=POST,DELETE,PUT
+          filters:
+            - RewritePath=/combination/body/(?<path>.*),/$\{path}
+
+        - id: combination-service-engine-1
+          uri: http://localhost:13003
+          predicates:
+            - Path=/combination/engine/**
+            - Method=GET
+          filters:
+            - RewritePath=/combination/engine/(?<path>.*),/$\{path}
+        - id: combination-service-engine-2
+          uri: http://localhost:23003
+          predicates:
+            - Path=/combination/engine/**
+            - Method=POST,DELETE,PUT
+          filters:
+            - RewritePath=/combination/engine/(?<path>.*),/$\{path}
