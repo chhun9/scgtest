@@ -1,0 +1,34 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: combination-service-wheel-1
+        uri: http://localhost:13001
+        predicates:
+        - Path=/combination/wheel/**
+        - Method=GET
+      - id: combination-service-wheel-2
+        uri: http://localhost:23001
+        predicates:
+        - Path=/combination/wheel/**
+        - Method!=GET
+      - id: combination-service-body-1
+        uri: http://localhost:13002
+        predicates:
+        - Path=/combination/body/**
+        - Method=GET
+      - id: combination-service-body-2
+        uri: http://localhost:23002
+        predicates:
+        - Path=/combination/body/**
+        - Method!=GET
+      - id: combination-service-engine-1
+        uri: http://localhost:13003
+        predicates:
+        - Path=/combination/engine/**
+        - Method=GET
+      - id: combination-service-engine-2
+        uri: http://localhost:23003
+        predicates:
+        - Path=/combination/engine/**
+        - Method!=GET
